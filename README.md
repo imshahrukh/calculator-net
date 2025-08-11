@@ -10,6 +10,7 @@ A comprehensive mortgage calculator built with Next.js, TypeScript, Tailwind CSS
 - **Complete Cost Breakdown**: Taxes, insurance, PMI, HOA, and other costs
 - **Start Date Selection**: Month and year selectors for loan start
 
+
 ### 💰 Extra Payment Analysis
 - **Monthly Extra Payments**: With custom start date
 - **One-time Extra Payments**: For windfalls and bonuses
