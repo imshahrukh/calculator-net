@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST="{\"components/MortgageCalculatorEnhanced.tsx -> ./AmortizationTableEnhanced\":{\"id\":\"components/MortgageCalculatorEnhanced.tsx -> ./AmortizationTableEnhanced\",\"files\":[\"static/chunks/_app-pages-browser_components_AmortizationTableEnhanced_tsx.js\"]},\"components/MortgageCalculatorEnhanced.tsx -> ./PaymentChart\":{\"id\":\"components/MortgageCalculatorEnhanced.tsx -> ./PaymentChart\",\"files\":[\"static/chunks/_app-pages-browser_components_PaymentChart_tsx.js\"]}}"
