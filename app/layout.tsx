@@ -5,43 +5,45 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Mortgage Calculator - Free Online Home Loan Estimator',
-  description: 'Calculate monthly mortgage payments, amortization schedules, and extra payment impacts with our advanced tool. Free and accurate mortgage calculator with charts and detailed breakdowns.',
+  title: 'Calculator.net - Advanced Financial Calculators for Smart Decisions',
+  description: 'Free online financial calculators including mortgage calculator, investment calculator, and budget planner. Get detailed analysis, interactive charts, and expert insights to make informed financial decisions.',
   keywords: [
+    'financial calculator',
     'mortgage calculator',
-    'home loan calculator', 
+    'investment calculator',
+    'budget planner',
+    'loan calculator',
     'amortization schedule',
-    'extra payments mortgage',
+    'extra payments calculator',
     'mortgage payment calculator',
     'home loan estimator',
-    'mortgage amortization',
-    'monthly payment calculator',
-    'refinance calculator',
-    'real estate calculator'
+    'financial planning tools',
+    'free calculator',
+    'online calculator'
   ].join(', '),
-  authors: [{ name: 'Mortgage Calculator' }],
-  creator: 'Mortgage Calculator',
-  publisher: 'Mortgage Calculator',
+  authors: [{ name: 'Calculator.net' }],
+  creator: 'Calculator.net',
+  publisher: 'Calculator.net',
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://mortgage-calculator.example.com'),
+  metadataBase: new URL('https://calculator.net'),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'Mortgage Calculator - Free Online Home Loan Estimator',
-    description: 'Calculate monthly mortgage payments, amortization schedules, and extra payment impacts with our advanced tool.',
-    url: 'https://mortgage-calculator.example.com',
-    siteName: 'Mortgage Calculator',
+    title: 'Calculator.net - Advanced Financial Calculators for Smart Decisions',
+    description: 'Free online financial calculators including mortgage calculator, investment calculator, and budget planner. Get detailed analysis, interactive charts, and expert insights.',
+    url: 'https://calculator.net',
+    siteName: 'Calculator.net',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Mortgage Calculator - Calculate your home loan payments',
+        alt: 'Calculator.net - Advanced Financial Calculators',
       },
     ],
     locale: 'en_US',
@@ -49,10 +51,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mortgage Calculator - Free Online Home Loan Estimator',
-    description: 'Calculate monthly mortgage payments, amortization schedules, and extra payment impacts with our advanced tool.',
+    title: 'Calculator.net - Advanced Financial Calculators for Smart Decisions',
+    description: 'Free online financial calculators including mortgage calculator, investment calculator, and budget planner.',
     images: ['/og-image.jpg'],
-    creator: '@mortgagecalc',
+    creator: '@calculatornet',
   },
   robots: {
     index: true,
@@ -81,10 +83,10 @@ export default function RootLayout({
     '@graph': [
       {
         '@type': 'WebApplication',
-        '@id': 'https://mortgage-calculator.example.com/#webapp',
-        'name': 'Mortgage Calculator',
-        'description': 'Free online mortgage calculator to estimate monthly payments, view amortization schedules, and analyze extra payment scenarios.',
-        'url': 'https://mortgage-calculator.example.com',
+        '@id': 'https://calculator.net/#webapp',
+        'name': 'Calculator.net',
+        'description': 'Free online financial calculators to help you make informed decisions about mortgages, investments, and budgeting.',
+        'url': 'https://calculator.net',
         'applicationCategory': 'FinanceApplication',
         'operatingSystem': 'Web Browser',
         'offers': {
@@ -93,69 +95,71 @@ export default function RootLayout({
           'priceCurrency': 'USD'
         },
         'featureList': [
-          'Monthly payment calculation',
+          'Mortgage payment calculation',
           'Amortization schedule',
           'Extra payment analysis',
-          'PMI calculation',
-          'Property tax estimation',
-          'Interactive charts and graphs'
+          'Investment calculator',
+          'Budget planning tools',
+          'Interactive charts and graphs',
+          'Scenario planning',
+          'Privacy-first calculations'
         ]
       },
       {
         '@type': 'FAQPage',
-        '@id': 'https://mortgage-calculator.example.com/#faq',
+        '@id': 'https://calculator.net/#faq',
         'mainEntity': [
           {
             '@type': 'Question',
-            'name': 'How is the monthly mortgage payment calculated?',
+            'name': 'Are the calculators free to use?',
             'acceptedAnswer': {
               '@type': 'Answer',
-              'text': 'The monthly mortgage payment is calculated using the standard mortgage formula: M = P[r(1+r)^n]/[(1+r)^n-1], where M is the monthly payment, P is the principal loan amount, r is the monthly interest rate, and n is the number of payments.'
+              'text': 'Yes, all our calculators are completely free to use. No registration or payment required.'
             }
           },
           {
             '@type': 'Question',
-            'name': 'What is included in the total monthly payment?',
+            'name': 'Is my data secure when using the calculators?',
             'acceptedAnswer': {
               '@type': 'Answer',
-              'text': 'The total monthly payment includes principal and interest (P&I), property taxes, homeowners insurance, private mortgage insurance (PMI) if applicable, HOA fees, and any other monthly costs.'
+              'text': 'Absolutely. All calculations are performed locally in your browser. No data is stored or transmitted to our servers.'
             }
           },
           {
             '@type': 'Question',
-            'name': 'How do extra payments affect my mortgage?',
+            'name': 'What calculators are available?',
             'acceptedAnswer': {
               '@type': 'Answer',
-              'text': 'Extra payments reduce the principal balance faster, which decreases the total interest paid over the life of the loan and can significantly shorten the loan term.'
+              'text': 'We currently offer a comprehensive mortgage calculator with more calculators coming soon including investment calculator, loan comparison tool, and budget planner.'
             }
           }
         ]
       },
       {
         '@type': 'Organization',
-        '@id': 'https://mortgage-calculator.example.com/#organization',
-        'name': 'Mortgage Calculator',
-        'url': 'https://mortgage-calculator.example.com',
+        '@id': 'https://calculator.net/#organization',
+        'name': 'Calculator.net',
+        'url': 'https://calculator.net',
         'logo': {
           '@type': 'ImageObject',
-          'url': 'https://mortgage-calculator.example.com/logo.png'
+          'url': 'https://calculator.net/logo.png'
         }
       },
       {
         '@type': 'WebSite',
-        '@id': 'https://mortgage-calculator.example.com/#website',
-        'url': 'https://mortgage-calculator.example.com',
-        'name': 'Mortgage Calculator',
-        'description': 'Free online mortgage calculator with amortization schedules and extra payment analysis.',
+        '@id': 'https://calculator.net/#website',
+        'url': 'https://calculator.net',
+        'name': 'Calculator.net',
+        'description': 'Free online financial calculators with detailed analysis and interactive charts.',
         'publisher': {
-          '@id': 'https://mortgage-calculator.example.com/#organization'
+          '@id': 'https://calculator.net/#organization'
         },
         'potentialAction': [
           {
             '@type': 'SearchAction',
             'target': {
               '@type': 'EntryPoint',
-              'urlTemplate': 'https://mortgage-calculator.example.com/search?q={search_term_string}'
+              'urlTemplate': 'https://calculator.net/search?q={search_term_string}'
             },
             'query-input': 'required name=search_term_string'
           }
@@ -197,31 +201,7 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <div className="min-h-screen bg-background">
-          <header className="border-b">
-            <div className="container mx-auto px-4 py-4">
-              <h1 className="text-2xl font-bold text-primary">
-                Mortgage Calculator
-              </h1>
-              <p className="text-muted-foreground text-sm">
-                Free online home loan payment estimator
-              </p>
-            </div>
-          </header>
-          <main className="container mx-auto px-4 py-8">
-            {children}
-          </main>
-          <footer className="border-t mt-16">
-            <div className="container mx-auto px-4 py-8">
-              <div className="text-center text-sm text-muted-foreground">
-                <p>© 2024 Mortgage Calculator. Free online mortgage payment calculator.</p>
-                <p className="mt-2">
-                  Calculate monthly payments, view amortization schedules, and analyze extra payment scenarios.
-                </p>
-              </div>
-            </div>
-          </footer>
-        </div>
+        {children}
       </body>
     </html>
   )

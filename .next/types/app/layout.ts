@@ -1,4 +1,4 @@
-// File: /Users/dev05/Desktop/calculator-net/app/layout.tsx
+// File: /Users/macbookpro/Documents/triage.inc/calculator-net/app/layout.tsx
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
