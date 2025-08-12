@@ -525,7 +525,7 @@ const MortgageCalculator: React.FC = () => {
       </Card>
 
       {/* Charts */}
-      <PaymentChart mortgageOutput={mortgageOutput} inputs={inputs} />
+      <PaymentChart mortgageOutput={mortgageOutput} />
 
       {/* Amortization Schedule */}
       {showSchedule && (

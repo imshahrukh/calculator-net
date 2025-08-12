@@ -11,24 +11,26 @@ import { Separator } from '@/components/ui/separator'
 import { calculateMortgage, formatCurrency, formatCurrencyWithCents, formatPercent, type MortgageInputs, type MortgageOutput } from '@/lib/utils'
 import { format } from 'date-fns'
 import dynamic from 'next/dynamic'
-import { Plus, Trash2, Calculator, TrendingUp, PieChart, BarChart3 } from 'lucide-react'
+import { Plus, Trash2, Calculator, TrendingUp, PieChart, BarChart3, Settings, Eye, EyeOff, Calendar } from 'lucide-react'
 import ErrorBoundary from './ErrorBoundary'
+import { EnhancedMortgageForm } from './EnhancedMortgageForm'
+import { EnhancedRightPanel } from './EnhancedRightPanel'
 
 // Dynamically import chart components for better performance
-const PaymentChart = dynamic(() => import('./PaymentChart'), { 
+const EnhancedPaymentChart = dynamic(() => import('./EnhancedPaymentChart'), { 
   ssr: false,
   loading: () => (
     <div className="h-64 bg-gradient-to-r from-slate-50 to-slate-100 animate-pulse rounded-lg flex items-center justify-center">
-      <div className="text-slate-500">Loading charts...</div>
+      <div className="text-slate-500">Loading enhanced charts...</div>
     </div>
   )
 })
 
-const AmortizationTableEnhanced = dynamic(() => import('./AmortizationTableEnhanced'), {
+const EnhancedAmortizationTable = dynamic(() => import('./EnhancedAmortizationTable'), {
   ssr: false,
   loading: () => (
     <div className="h-32 bg-gradient-to-r from-slate-50 to-slate-100 animate-pulse rounded-lg flex items-center justify-center">
-      <div className="text-slate-500">Loading amortization table...</div>
+      <div className="text-slate-500">Loading enhanced amortization table...</div>
     </div>
   )
 })
@@ -39,34 +41,44 @@ interface ExtraPayment {
   year: number
 }
 
-const MortgageCalculatorEnhanced: React.FC = () => {
-  const currentDate = new Date()
-  const currentMonth = currentDate.getMonth() + 1
-  const currentYear = currentDate.getFullYear()
+interface MortgageCalculatorEnhancedProps {
+  initialInputs?: MortgageInputs
+  isSharedView?: boolean
+}
 
-  // Main form state
-  const [inputs, setInputs] = useState<MortgageInputs>({
-    homePrice: 300000,
-    downPaymentAmount: 60000,
-    downPaymentPercent: 20,
-    loanTerm: 30,
-    interestRate: 7.0,
-    startMonth: currentMonth,
-    startYear: currentYear,
-    propertyTaxesAmount: 3600,
-    propertyTaxesPercent: 1.2,
-    homeInsurance: 1000,
-    pmi: 0.5,
-    hoaFee: 0,
-    otherCosts: 0,
-    extraMonthlyPayment: 0,
-    extraMonthlyStartMonth: currentMonth,
-    extraMonthlyStartYear: currentYear,
-    oneTimeExtraPayment: 0,
-    oneTimeExtraMonth: currentMonth,
-    oneTimeExtraYear: currentYear,
-    annualExtraPayment: 0,
-    annualExtraStartYear: currentYear,
+const MortgageCalculatorEnhanced: React.FC<MortgageCalculatorEnhancedProps> = ({ 
+  initialInputs,
+  isSharedView = false
+}) => {
+  // Initialize inputs with default values or provided initial inputs
+  const [inputs, setInputs] = useState<MortgageInputs>(() => {
+    if (initialInputs) {
+      return initialInputs
+    }
+    
+    return {
+      homePrice: 500000,
+      downPaymentAmount: 100000,
+      downPaymentPercent: 20,
+      loanTerm: 30,
+      interestRate: 6.5,
+      startMonth: new Date().getMonth() + 1,
+      startYear: new Date().getFullYear(),
+      propertyTaxesAmount: 5000,
+      propertyTaxesPercent: 1,
+      homeInsurance: 1200,
+      pmi: 0,
+      hoaFee: 0,
+      otherCosts: 0,
+      extraMonthlyPayment: 0,
+      extraMonthlyStartMonth: new Date().getMonth() + 1,
+      extraMonthlyStartYear: new Date().getFullYear(),
+      oneTimeExtraPayment: 0,
+      oneTimeExtraMonth: new Date().getMonth() + 1,
+      oneTimeExtraYear: new Date().getFullYear(),
+      annualExtraPayment: 0,
+      annualExtraStartYear: new Date().getFullYear() + 1,
+    }
   })
 
   // UI state
@@ -84,7 +96,7 @@ const MortgageCalculatorEnhanced: React.FC = () => {
 
   // Multiple extra payments
   const [extraPayments, setExtraPayments] = useState<ExtraPayment[]>([
-    { amount: 0, month: currentMonth, year: currentYear }
+    { amount: 0, month: new Date().getMonth() + 1, year: new Date().getFullYear() }
   ])
 
   // Payment frequency
@@ -99,7 +111,7 @@ const MortgageCalculatorEnhanced: React.FC = () => {
     'July', 'August', 'September', 'October', 'November', 'December'
   ]
 
-  const years = Array.from({ length: 50 }, (_, i) => currentYear + i)
+  const years = Array.from({ length: 50 }, (_, i) => new Date().getFullYear() + i)
 
   // Calculate mortgage details with optimized memoization
   const mortgageOutput: MortgageOutput = useMemo(() => {
@@ -140,6 +152,18 @@ const MortgageCalculatorEnhanced: React.FC = () => {
     const timer = setTimeout(() => setLiveMessage(''), 1000)
     return () => clearTimeout(timer)
   }, [mortgageOutput.totalMonthlyPayment, mortgageOutput.totalInterest, mortgageOutput.payoffDate])
+
+  // Emit calculator update events for sharing functionality
+  useEffect(() => {
+    const event = new CustomEvent('calculator-update', {
+      detail: {
+        type: 'calculator-update',
+        inputs,
+        mortgageOutput
+      }
+    })
+    window.dispatchEvent(event)
+  }, [inputs, mortgageOutput])
 
   // Helper functions
   const updateDownPayment = useCallback((amount: number) => {
@@ -192,7 +216,7 @@ const MortgageCalculatorEnhanced: React.FC = () => {
   }, [])
 
   const addExtraPayment = () => {
-    setExtraPayments(prev => [...prev, { amount: 0, month: currentMonth, year: currentYear }])
+    setExtraPayments(prev => [...prev, { amount: 0, month: new Date().getMonth() + 1, year: new Date().getFullYear() }])
   }
 
   const removeExtraPayment = (index: number) => {
@@ -206,7 +230,7 @@ const MortgageCalculatorEnhanced: React.FC = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-8" role="main" aria-label="Mortgage Calculator">
+    <div className="max-w-full mx-auto p-6 space-y-8" role="main" aria-label="Mortgage Calculator">
       {/* Live region for screen reader announcements */}
       <div 
         aria-live="polite" 
@@ -257,648 +281,198 @@ const MortgageCalculatorEnhanced: React.FC = () => {
       </Card>
 
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
-        {/* Left Panel - Calculator Form */}
+        {/* Left Panel - Enhanced Calculator Form */}
         <div className="xl:col-span-3 space-y-6">
-          
-          {/* Basic Loan Information */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calculator className="h-5 w-5" />
-                Loan Information
+          <EnhancedMortgageForm
+            inputs={inputs}
+            setInputs={setInputs}
+            updateHomePrice={updateHomePrice}
+            updateDownPayment={updateDownPayment}
+            updateDownPaymentPercent={updateDownPaymentPercent}
+            updatePropertyTaxes={updatePropertyTaxes}
+            updatePropertyTaxesPercent={updatePropertyTaxesPercent}
+            showAdvanced={showAdvanced}
+            setShowAdvanced={setShowAdvanced}
+            showBiweekly={showBiweekly}
+            setShowBiweekly={setShowBiweekly}
+            paymentFrequency={paymentFrequency}
+            setPaymentFrequency={setPaymentFrequency}
+            annualIncreases={annualIncreases}
+            setAnnualIncreases={setAnnualIncreases}
+            extraPayments={extraPayments}
+            setExtraPayments={setExtraPayments}
+            addExtraPayment={addExtraPayment}
+            removeExtraPayment={removeExtraPayment}
+            updateExtraPayment={updateExtraPayment}
+            months={months}
+            years={years}
+            currentMonth={new Date().getMonth() + 1}
+            currentYear={new Date().getFullYear()}
+          />
+
+          {/* Enhanced Options */}
+          <Card className="border-2 border-indigo-100 shadow-lg">
+            <CardHeader className="bg-gradient-to-r from-indigo-50 to-purple-50 border-b border-indigo-200">
+              <CardTitle className="flex items-center gap-3 text-indigo-900">
+                <div className="p-2 bg-indigo-100 rounded-lg">
+                  <Settings className="h-5 w-5 text-indigo-600" />
+                </div>
+                Display Options
               </CardTitle>
+              <CardDescription className="text-indigo-700">
+                Choose what additional information to display
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Home Price */}
-                <div>
-                  <Label htmlFor="homePrice">Home Price</Label>
-                  <Input
-                    id="homePrice"
-                    type="number"
-                    value={inputs.homePrice}
-                    onChange={(e) => updateHomePrice(Number(e.target.value))}
-                    className="text-right font-mono"
-                    aria-describedby="homePrice-desc"
-                    aria-label="Enter the total purchase price of the home in dollars"
-                  />
-                  <div id="homePrice-desc" className="sr-only">
-                    Enter the total purchase price of the home in dollars. This will be used to calculate your loan amount.
-                  </div>
-                </div>
-
-                {/* Loan Term */}
-                <div>
-                  <Label htmlFor="loanTerm">Loan Term (years)</Label>
-                  <Select 
-                    value={inputs.loanTerm.toString()} 
-                    onValueChange={(value) => setInputs(prev => ({ ...prev, loanTerm: Number(value) }))}
-                  >
-                    <SelectTrigger id="loanTerm" aria-describedby="loanTerm-desc" aria-label="Select loan term in years">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="15">15 years</SelectItem>
-                      <SelectItem value="20">20 years</SelectItem>
-                      <SelectItem value="25">25 years</SelectItem>
-                      <SelectItem value="30">30 years</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <div id="loanTerm-desc" className="sr-only">
-                    Select the number of years to repay the loan. Shorter terms mean higher monthly payments but less total interest.
-                  </div>
-                </div>
-
-                {/* Interest Rate */}
-                <div>
-                  <Label htmlFor="interestRate">Interest Rate (% annual)</Label>
-                  <Input
-                    id="interestRate"
-                    type="number"
-                    step="0.001"
-                    value={inputs.interestRate}
-                    onChange={(e) => setInputs(prev => ({ ...prev, interestRate: Number(e.target.value) }))}
-                    className="text-right font-mono"
-                    aria-describedby="interestRate-desc"
-                    aria-label="Enter the annual interest rate as a percentage"
-                  />
-                  <div id="interestRate-desc" className="sr-only">
-                    Enter the annual interest rate as a percentage. For example, enter 7 for 7% interest rate.
-                  </div>
-                </div>
-
-                {/* Payment Frequency */}
-                <div>
-                  <Label>Payment Frequency</Label>
-                  <Select value={paymentFrequency} onValueChange={(value: 'monthly' | 'biweekly') => setPaymentFrequency(value)}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                      <SelectItem value="biweekly">Bi-weekly</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {/* Down Payment */}
-              <div>
-                <Label>Down Payment</Label>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <Input
-                      type="number"
-                      placeholder="Amount ($)"
-                      value={inputs.downPaymentAmount}
-                      onChange={(e) => updateDownPayment(Number(e.target.value))}
-                      className="text-right font-mono"
-                    />
-                  </div>
-                  <div>
-                    <Input
-                      type="number"
-                      placeholder="Percent (%)"
-                      step="0.1"
-                      value={inputs.downPaymentPercent}
-                      onChange={(e) => updateDownPaymentPercent(Number(e.target.value))}
-                      className="text-right font-mono"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Start Date */}
-              <div>
-                <Label>Start Date</Label>
-                <div className="grid grid-cols-2 gap-2">
-                  <Select value={inputs.startMonth.toString()} onValueChange={(value) => setInputs(prev => ({ ...prev, startMonth: Number(value) }))}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {months.map((month, index) => (
-                        <SelectItem key={index + 1} value={(index + 1).toString()}>
-                          {month}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Select value={inputs.startYear.toString()} onValueChange={(value) => setInputs(prev => ({ ...prev, startYear: Number(value) }))}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {years.map(year => (
-                        <SelectItem key={year} value={year.toString()}>
-                          {year}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Monthly Costs */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5" />
-                Monthly Costs & Insurance
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Property Taxes */}
-              <div>
-                <Label>Property Taxes (annual)</Label>
-                <div className="grid grid-cols-2 gap-2">
-                  <Input
-                    type="number"
-                    placeholder="Amount ($)"
-                    value={inputs.propertyTaxesAmount}
-                    onChange={(e) => updatePropertyTaxes(Number(e.target.value))}
-                    className="text-right font-mono"
-                  />
-                  <Input
-                    type="number"
-                    placeholder="Percent (%)"
-                    step="0.01"
-                    value={inputs.propertyTaxesPercent}
-                    onChange={(e) => updatePropertyTaxesPercent(Number(e.target.value))}
-                    className="text-right font-mono"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Home Insurance */}
-                <div>
-                  <Label htmlFor="homeInsurance">Home Insurance (annual)</Label>
-                  <Input
-                    id="homeInsurance"
-                    type="number"
-                    value={inputs.homeInsurance}
-                    onChange={(e) => setInputs(prev => ({ ...prev, homeInsurance: Number(e.target.value) }))}
-                    className="text-right font-mono"
-                  />
-                </div>
-
-                {/* PMI */}
-                <div>
-                  <Label htmlFor="pmi">PMI (annual % of loan)</Label>
-                  <Input
-                    id="pmi"
-                    type="number"
-                    step="0.01"
-                    value={inputs.pmi}
-                    onChange={(e) => setInputs(prev => ({ ...prev, pmi: Number(e.target.value) }))}
-                    className="text-right font-mono"
-                    disabled={inputs.downPaymentPercent >= 20}
-                  />
-                  {inputs.downPaymentPercent >= 20 && (
-                    <p className="text-xs text-muted-foreground mt-1">PMI not required (down payment ≥ 20%)</p>
-                  )}
-                </div>
-
-                {/* HOA Fee */}
-                <div>
-                  <Label htmlFor="hoaFee">HOA Fee (monthly)</Label>
-                  <Input
-                    id="hoaFee"
-                    type="number"
-                    value={inputs.hoaFee}
-                    onChange={(e) => setInputs(prev => ({ ...prev, hoaFee: Number(e.target.value) }))}
-                    className="text-right font-mono"
-                  />
-                </div>
-
-                {/* Other Costs */}
-                <div>
-                  <Label htmlFor="otherCosts">Other Costs (monthly)</Label>
-                  <Input
-                    id="otherCosts"
-                    type="number"
-                    value={inputs.otherCosts}
-                    onChange={(e) => setInputs(prev => ({ ...prev, otherCosts: Number(e.target.value) }))}
-                    className="text-right font-mono"
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Annual Tax & Cost Increase */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Annual Tax & Cost Increase</CardTitle>
-              <CardDescription>Account for yearly increases in taxes and insurance</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label>Property Taxes Increase</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      type="number"
-                      step="0.1"
-                      value={annualIncreases.propertyTaxIncrease}
-                      onChange={(e) => setAnnualIncreases(prev => ({...prev, propertyTaxIncrease: Number(e.target.value)}))}
-                      className="text-right font-mono"
-                    />
-                    <span className="text-sm text-muted-foreground">%</span>
-                  </div>
-                </div>
-
-                <div>
-                  <Label>Home Insurance Increase</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      type="number"
-                      step="0.1"
-                      value={annualIncreases.homeInsuranceIncrease}
-                      onChange={(e) => setAnnualIncreases(prev => ({...prev, homeInsuranceIncrease: Number(e.target.value)}))}
-                      className="text-right font-mono"
-                    />
-                    <span className="text-sm text-muted-foreground">%</span>
-                  </div>
-                </div>
-
-                <div>
-                  <Label>HOA Fee Increase</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      type="number"
-                      step="0.1"
-                      value={annualIncreases.hoaFeeIncrease}
-                      onChange={(e) => setAnnualIncreases(prev => ({...prev, hoaFeeIncrease: Number(e.target.value)}))}
-                      className="text-right font-mono"
-                    />
-                    <span className="text-sm text-muted-foreground">%</span>
-                  </div>
-                </div>
-
-                <div>
-                  <Label>Other Costs Increase</Label>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      type="number"
-                      step="0.1"
-                      value={annualIncreases.otherCostsIncrease}
-                      onChange={(e) => setAnnualIncreases(prev => ({...prev, otherCostsIncrease: Number(e.target.value)}))}
-                      className="text-right font-mono"
-                    />
-                    <span className="text-sm text-muted-foreground">%</span>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Extra Payments */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Extra Payments</CardTitle>
-              <CardDescription>Add extra payments to pay off your loan faster</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {/* Extra Monthly Payment */}
-              <div>
-                <Label>Extra Monthly Payment</Label>
-                <div className="grid grid-cols-3 gap-2">
-                  <Input
-                    type="number"
-                    placeholder="Amount ($)"
-                    value={inputs.extraMonthlyPayment}
-                    onChange={(e) => setInputs(prev => ({ ...prev, extraMonthlyPayment: Number(e.target.value) }))}
-                    className="text-right font-mono"
-                  />
-                  <Select value={inputs.extraMonthlyStartMonth.toString()} onValueChange={(value) => setInputs(prev => ({ ...prev, extraMonthlyStartMonth: Number(value) }))}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {months.map((month, index) => (
-                        <SelectItem key={index + 1} value={(index + 1).toString()}>
-                          {month}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Select value={inputs.extraMonthlyStartYear.toString()} onValueChange={(value) => setInputs(prev => ({ ...prev, extraMonthlyStartYear: Number(value) }))}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {years.map(year => (
-                        <SelectItem key={year} value={year.toString()}>
-                          {year}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {/* Extra Yearly Payment */}
-              <div>
-                <Label>Extra Yearly Payment</Label>
-                <div className="grid grid-cols-3 gap-2">
-                  <Input
-                    type="number"
-                    placeholder="Amount ($)"
-                    value={inputs.annualExtraPayment}
-                    onChange={(e) => setInputs(prev => ({ ...prev, annualExtraPayment: Number(e.target.value) }))}
-                    className="text-right font-mono"
-                  />
-                  <Select value={inputs.startMonth.toString()} onValueChange={(value) => setInputs(prev => ({ ...prev, startMonth: Number(value) }))}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {months.map((month, index) => (
-                        <SelectItem key={index + 1} value={(index + 1).toString()}>
-                          {month}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <Select value={inputs.annualExtraStartYear.toString()} onValueChange={(value) => setInputs(prev => ({ ...prev, annualExtraStartYear: Number(value) }))}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {years.map(year => (
-                        <SelectItem key={year} value={year.toString()}>
-                          {year}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              {/* Extra One-time Payments */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <Label>Extra One-time Payments</Label>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={addExtraPayment}
-                    className="flex items-center gap-1"
-                  >
-                    <Plus className="h-4 w-4" />
-                    Add Payment
-                  </Button>
-                </div>
-                
-                {extraPayments.map((payment, index) => (
-                  <div key={index} className="grid grid-cols-4 gap-2 items-end">
-                    <Input
-                      type="number"
-                      placeholder="Amount ($)"
-                      value={payment.amount}
-                      onChange={(e) => updateExtraPayment(index, 'amount', Number(e.target.value))}
-                      className="text-right font-mono"
-                    />
-                    <Select value={payment.month.toString()} onValueChange={(value) => updateExtraPayment(index, 'month', Number(value))}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {months.map((month, idx) => (
-                          <SelectItem key={idx + 1} value={(idx + 1).toString()}>
-                            {month}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <Select value={payment.year.toString()} onValueChange={(value) => updateExtraPayment(index, 'year', Number(value))}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {years.map(year => (
-                          <SelectItem key={year} value={year.toString()}>
-                            {year}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => removeExtraPayment(index)}
-                      disabled={extraPayments.length === 1}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Options */}
-          <Card>
-            <CardContent className="pt-6">
-              <div className="space-y-3">
-                <div className="flex items-center space-x-2">
+            <CardContent className="p-6">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-indigo-200 hover:bg-indigo-50 transition-colors">
                   <Checkbox 
                     id="showSchedule" 
                     checked={showSchedule}
                     onCheckedChange={(checked) => setShowSchedule(checked as boolean)}
+                    className="text-indigo-600"
                   />
-                  <Label htmlFor="showSchedule" className="flex items-center gap-2">
-                    <BarChart3 className="h-4 w-4" />
-                    Show Monthly & Yearly Payment Schedule
+                  <Label htmlFor="showSchedule" className="flex items-center gap-2 cursor-pointer">
+                    <div className="p-1 bg-indigo-100 rounded">
+                      <BarChart3 className="h-4 w-4 text-indigo-600" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-indigo-900">Show Monthly & Yearly Payment Schedule</div>
+                      <div className="text-sm text-indigo-600">Detailed amortization table with payment breakdown</div>
+                    </div>
                   </Label>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3 p-3 bg-white rounded-lg border border-indigo-200 hover:bg-indigo-50 transition-colors">
                   <Checkbox 
                     id="showBiweekly" 
                     checked={showBiweekly}
                     onCheckedChange={(checked) => setShowBiweekly(checked as boolean)}
+                    className="text-indigo-600"
                   />
-                  <Label htmlFor="showBiweekly">Show Biweekly Payback Results</Label>
+                  <Label htmlFor="showBiweekly" className="flex items-center gap-2 cursor-pointer">
+                    <div className="p-1 bg-indigo-100 rounded">
+                      <Calendar className="h-4 w-4 text-indigo-600" />
+                    </div>
+                    <div>
+                      <div className="font-semibold text-indigo-900">Show Biweekly Payback Results</div>
+                      <div className="text-sm text-indigo-600">Compare biweekly vs monthly payment benefits</div>
+                    </div>
+                  </Label>
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Right Panel - Detailed Breakdown */}
+        {/* Right Panel - Enhanced Detailed Breakdown */}
         <div className="space-y-6">
-          {/* Detailed Payment Breakdown */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Monthly Payment Details</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-sm">Principal & Interest:</span>
-                  <span className="font-mono">{formatCurrency(mortgageOutput.monthlyPI)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm">Property Taxes:</span>
-                  <span className="font-mono">{formatCurrency(inputs.propertyTaxesAmount / 12)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-sm">Home Insurance:</span>
-                  <span className="font-mono">{formatCurrency(inputs.homeInsurance / 12)}</span>
-                </div>
-                {inputs.downPaymentPercent < 20 && (
-                  <div className="flex justify-between">
-                    <span className="text-sm">PMI:</span>
-                    <span className="font-mono">{formatCurrency(inputs.pmi / 100 * mortgageOutput.loanAmount / 12)}</span>
-                  </div>
-                )}
-                {inputs.hoaFee > 0 && (
-                  <div className="flex justify-between">
-                    <span className="text-sm">HOA Fee:</span>
-                    <span className="font-mono">{formatCurrency(inputs.hoaFee)}</span>
-                  </div>
-                )}
-                {inputs.otherCosts > 0 && (
-                  <div className="flex justify-between">
-                    <span className="text-sm">Other Costs:</span>
-                    <span className="font-mono">{formatCurrency(inputs.otherCosts)}</span>
-                  </div>
-                )}
-                
-                <Separator />
-                
-                <div className="flex justify-between font-semibold">
-                  <span>Total Monthly:</span>
-                  <span className="font-mono text-primary">{formatCurrency(mortgageOutput.totalMonthlyPayment)}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Loan Summary */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Loan Summary</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span>House Price:</span>
-                  <span className="font-mono">{formatCurrency(inputs.homePrice)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Loan Amount:</span>
-                  <span className="font-mono">{formatCurrency(mortgageOutput.loanAmount)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Down Payment:</span>
-                  <span className="font-mono">{formatCurrency(inputs.downPaymentAmount)} ({formatPercent(inputs.downPaymentPercent)})</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Total of Payments:</span>
-                  <span className="font-mono">{formatCurrency(mortgageOutput.totalMortgagePayments)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Total Interest:</span>
-                  <span className="font-mono">{formatCurrency(mortgageOutput.totalInterest)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Payoff Date:</span>
-                  <span className="font-mono">{format(mortgageOutput.payoffDate, 'MMM yyyy')}</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Quick Actions */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Quick Scenarios</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full justify-start"
-                onClick={() => setInputs(prev => ({ ...prev, extraMonthlyPayment: 100 }))}
-              >
-                Add $100/month extra
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full justify-start"
-                onClick={() => setInputs(prev => ({ ...prev, extraMonthlyPayment: 200 }))}
-              >
-                Add $200/month extra
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full justify-start"
-                onClick={() => setInputs(prev => ({ ...prev, loanTerm: 15 }))}
-              >
-                15-year loan
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full justify-start"
-                onClick={() => { setInputs(prev => ({ ...prev, downPaymentPercent: 20 })); updateDownPayment(20); }}
-              >
-                20% down payment
-              </Button>
-            </CardContent>
-          </Card>
+          <EnhancedRightPanel
+            mortgageOutput={mortgageOutput}
+            inputs={inputs}
+            setInputs={setInputs}
+            updateDownPayment={updateDownPayment}
+            updateDownPaymentPercent={updateDownPaymentPercent}
+          />
         </div>
       </div>
 
       {/* Charts */}
       <ErrorBoundary componentName="Payment Charts">
-        <PaymentChart mortgageOutput={mortgageOutput} />
+        <EnhancedPaymentChart mortgageOutput={mortgageOutput} />
       </ErrorBoundary>
 
       {/* Amortization Schedule */}
       {showSchedule && (
         <ErrorBoundary componentName="Amortization Table">
-          <AmortizationTableEnhanced 
+          <EnhancedAmortizationTable 
             annualSummary={mortgageOutput.annualSummary}
             monthlyPayments={mortgageOutput.monthlyPayments}
           />
         </ErrorBoundary>
       )}
 
-      {/* Biweekly Information */}
+      {/* Enhanced Biweekly Information */}
       {showBiweekly && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Biweekly Payment Benefits</CardTitle>
+        <Card className="border-2 border-green-100 shadow-lg">
+          <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 border-b border-green-200">
+            <CardTitle className="flex items-center gap-3 text-green-900">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <Calendar className="h-5 w-5 text-green-600" />
+              </div>
+              Biweekly Payment Benefits
+            </CardTitle>
+            <CardDescription className="text-green-700">
+              Accelerate your loan payoff with biweekly payments
+            </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-semibold mb-2">With Biweekly Payments</h4>
-                <div className="space-y-1 text-sm">
-                  <div>Payment: {formatCurrency(mortgageOutput.monthlyPI / 2)} every 2 weeks</div>
-                  <div>Total yearly payments: 26 (equivalent to 13 monthly)</div>
-                  <div>Estimated payoff: ~4-6 years earlier</div>
-                  <div>Interest savings: ~{formatCurrency(mortgageOutput.totalInterest * 0.25)}</div>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <h4 className="font-semibold text-green-900 flex items-center gap-2">
+                  <div className="p-1 bg-green-100 rounded">
+                    <TrendingUp className="h-4 w-4 text-green-600" />
+                  </div>
+                  With Biweekly Payments
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
+                    <span className="text-sm font-medium text-green-800">Payment Amount:</span>
+                    <span className="font-mono font-semibold text-green-700">
+                      {formatCurrency(mortgageOutput.monthlyPI / 2)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    <span className="text-sm font-medium text-blue-800">Payment Frequency:</span>
+                    <span className="font-semibold text-blue-700">Every 2 weeks</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-amber-50 rounded-lg border border-amber-200">
+                    <span className="text-sm font-medium text-amber-800">Total Yearly Payments:</span>
+                    <span className="font-semibold text-amber-700">26 (13 months worth)</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg border border-purple-200">
+                    <span className="text-sm font-medium text-purple-800">Estimated Payoff:</span>
+                    <span className="font-semibold text-purple-700">~4-6 years earlier</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-red-50 rounded-lg border border-red-200">
+                    <span className="text-sm font-medium text-red-800">Interest Savings:</span>
+                    <span className="font-mono font-semibold text-red-700">
+                      ~{formatCurrency(mortgageOutput.totalInterest * 0.25)}
+                    </span>
+                  </div>
                 </div>
               </div>
-              <div>
-                <h4 className="font-semibold mb-2">How It Works</h4>
-                <p className="text-sm text-muted-foreground">
-                  By making 26 biweekly payments instead of 12 monthly payments, 
-                  you effectively make one extra monthly payment per year, 
-                  significantly reducing your loan term and total interest paid.
-                </p>
+              
+              <div className="space-y-4">
+                <h4 className="font-semibold text-green-900 flex items-center gap-2">
+                  <div className="p-1 bg-green-100 rounded">
+                    <Calculator className="h-4 w-4 text-green-600" />
+                  </div>
+                  How It Works
+                </h4>
+                <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg border border-green-200">
+                  <p className="text-sm text-green-800 leading-relaxed">
+                    By making 26 biweekly payments instead of 12 monthly payments, 
+                    you effectively make one extra monthly payment per year. This 
+                    significantly reduces your loan term and total interest paid.
+                  </p>
+                </div>
+                
+                <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                  <h5 className="font-semibold text-blue-900 mb-2">💡 Pro Tip</h5>
+                  <p className="text-sm text-blue-800">
+                    Many lenders offer biweekly payment programs, or you can set up 
+                    automatic transfers to make this process seamless.
+                  </p>
+                </div>
+                
+                <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                  <h5 className="font-semibold text-amber-900 mb-2">📊 Impact</h5>
+                  <p className="text-sm text-amber-800">
+                    On a 30-year mortgage, biweekly payments can save you tens of 
+                    thousands in interest and pay off your loan 4-6 years early.
+                  </p>
+                </div>
               </div>
             </div>
           </CardContent>

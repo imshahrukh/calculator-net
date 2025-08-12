@@ -1,4 +1,5 @@
 {
+  "/page": "app/page.js",
   "/mortgage-calculator/page": "app/mortgage-calculator/page.js",
-  "/page": "app/page.js"
+  "/mortgage-calculator/shared/[id]/page": "app/mortgage-calculator/shared/[id]/page.js"
 }

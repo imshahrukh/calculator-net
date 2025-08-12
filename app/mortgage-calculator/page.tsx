@@ -1,10 +1,12 @@
 import React from 'react'
 import { Metadata } from 'next'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Calculator, ArrowLeft } from 'lucide-react'
+import { Calculator, ArrowLeft, Home, ChevronRight, BookOpen, BarChart3, Settings, Download, Share2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import MortgageCalculatorEnhanced from '@/components/MortgageCalculatorEnhanced'
+import ShareModalWrapper from '@/components/ShareModalWrapper'
 import Link from 'next/link'
+import { Logo } from '@/components/Logo'
 
 export const metadata: Metadata = {
   title: 'Mortgage Calculator - Calculate Monthly Payments & Amortization',
@@ -35,61 +37,140 @@ export const metadata: Metadata = {
 export default function MortgageCalculatorPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Navigation Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200/60">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Enhanced Navigation Header */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-slate-200/60 shadow-sm">
+        <div className="max-w-7xl mx-1 px-1 sm:px-6 lg:px-1">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition-colors">
-                <ArrowLeft className="h-5 w-5" />
-                <span>Back to Home</span>
+            {/* Left side - Logo and Breadcrumb */}
+            <div className="flex items-center space-x-6">
+              <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+                <Logo variant="compact" size={28} />
               </Link>
-              <div className="h-6 w-px bg-slate-300"></div>
-              <div className="flex items-center space-x-2">
-                <Calculator className="h-8 w-8 text-blue-600" />
-                <span className="text-xl font-bold text-slate-900">Mortgage Calculator</span>
-              </div>
+              
+              {/* Breadcrumb Navigation */}
+              <nav className="hidden md:flex items-center space-x-2 text-sm text-slate-500">
+                <Link href="/" className="flex items-center space-x-1 hover:text-blue-600 transition-colors">
+                  <Home className="h-4 w-4" />
+                  <span>Home</span>
+                </Link>
+                <ChevronRight className="h-4 w-4" />
+                <Link href="/" className="hover:text-blue-600 transition-colors">
+                  Calculators
+                </Link>
+                <ChevronRight className="h-4 w-4" />
+                <span className="text-slate-900 font-medium">Mortgage Calculator</span>
+              </nav>
             </div>
+
+            {/* Right side - Navigation Menu */}
             <nav className="hidden md:flex items-center space-x-6">
-              <a href="#calculator" className="text-slate-600 hover:text-blue-600 transition-colors">Calculator</a>
-              <a href="#guide" className="text-slate-600 hover:text-blue-600 transition-colors">Guide</a>
-              <Button variant="outline" size="sm">
-                Save Results
-              </Button>
+              <div className="flex items-center space-x-4">
+                <a href="#calculator" className="flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-lg hover:bg-blue-50">
+                  <Calculator className="h-4 w-4" />
+                  <span>Calculator</span>
+                </a>
+                <a href="#guide" className="flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-lg hover:bg-blue-50">
+                  <BookOpen className="h-4 w-4" />
+                  <span>Guide</span>
+                </a>
+                <a href="#charts" className="flex items-center space-x-2 text-slate-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-lg hover:bg-blue-50">
+                  <BarChart3 className="h-4 w-4" />
+                  <span>Charts</span>
+                </a>
+              </div>
+              
+              <div className="flex items-center space-x-3">
+                <Button variant="outline" size="sm" className="flex items-center space-x-2">
+                  <Download className="h-4 w-4" />
+                  <span>Save</span>
+                </Button>
+                <ShareModalWrapper />
+              </div>
             </nav>
+
+            {/* Mobile menu button */}
+            <button className="md:hidden p-2 rounded-lg hover:bg-slate-100 transition-colors">
+              <Settings className="h-6 w-6 text-slate-600" />
+            </button>
           </div>
         </div>
       </header>
 
-      {/* Page Header */}
-      <section className="py-12 bg-white/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-4">
-            Mortgage Calculator
-          </h1>
-          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-            Calculate your monthly mortgage payments, explore different scenarios, and understand your home loan with our comprehensive calculator featuring amortization schedules, extra payment analysis, and detailed cost breakdowns.
-          </p>
-          <div className="mt-8 flex items-center justify-center space-x-8 text-sm text-slate-500">
-            <div className="flex items-center space-x-2">
-              <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-              <span>Real-time calculations</span>
+      {/* Enhanced Page Header */}
+      <section className="relative py-16 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 overflow-hidden">
+        {/* Background decorations */}
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/10 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-white/5 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-0 left-1/3 w-96 h-96 bg-white/5 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center text-white">
+            {/* Badge */}
+            <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium mb-6 shadow-lg">
+              <Calculator className="h-4 w-4" />
+              <span>Professional Mortgage Calculator</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <div className="h-2 w-2 bg-blue-500 rounded-full"></div>
-              <span>Interactive charts</span>
+            
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
+              Calculate Your
+              <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent"> Dream Home</span>
+            </h1>
+            
+            <p className="text-xl sm:text-2xl text-blue-100 max-w-4xl mx-auto leading-relaxed mb-8">
+              Get instant mortgage payment estimates with detailed breakdowns, amortization schedules, and interactive charts. 
+              Plan your home purchase with confidence using our comprehensive calculator.
+            </p>
+            
+            {/* Feature highlights */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-8">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div className="h-12 w-12 bg-green-400/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <Calculator className="h-6 w-6 text-green-300" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">Real-time Calculations</h3>
+                <p className="text-blue-100 text-sm">Instant updates as you adjust your inputs</p>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div className="h-12 w-12 bg-blue-400/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <BarChart3 className="h-6 w-6 text-blue-300" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">Interactive Charts</h3>
+                <p className="text-blue-100 text-sm">Visualize your payment breakdown and loan progress</p>
+              </div>
+              
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+                <div className="h-12 w-12 bg-purple-400/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <BookOpen className="h-6 w-6 text-purple-300" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2">Detailed Analysis</h3>
+                <p className="text-blue-100 text-sm">Complete amortization schedules and extra payment analysis</p>
+              </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <div className="h-2 w-2 bg-purple-500 rounded-full"></div>
-              <span>Detailed amortization</span>
+            
+            {/* Quick stats */}
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm text-blue-200">
+              <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                <div className="h-2 w-2 bg-green-400 rounded-full"></div>
+                <span>100% Free</span>
+              </div>
+              <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                <div className="h-2 w-2 bg-blue-400 rounded-full"></div>
+                <span>No Registration</span>
+              </div>
+              <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                <div className="h-2 w-2 bg-purple-400 rounded-full"></div>
+                <span>Instant Results</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Main Calculator */}
-      <section id="calculator" className="py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="calculator" className="py-4">
+        <div className="max-w-full mx-2 px-2 sm:px-2 lg:px-2">
           <MortgageCalculatorEnhanced />
         </div>
       </section>
@@ -287,7 +368,7 @@ export default function MortgageCalculatorPage() {
 
       {/* Footer */}
       <footer className="bg-slate-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <div className="flex items-center space-x-2 mb-4">

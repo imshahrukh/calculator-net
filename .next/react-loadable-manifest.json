@@ -1,14 +1,14 @@
 {
-  "components/MortgageCalculatorEnhanced.tsx -> ./AmortizationTableEnhanced": {
-    "id": "components/MortgageCalculatorEnhanced.tsx -> ./AmortizationTableEnhanced",
+  "components/MortgageCalculatorEnhanced.tsx -> ./EnhancedAmortizationTable": {
+    "id": "components/MortgageCalculatorEnhanced.tsx -> ./EnhancedAmortizationTable",
     "files": [
-      "static/chunks/_app-pages-browser_components_AmortizationTableEnhanced_tsx.js"
+      "static/chunks/_app-pages-browser_components_EnhancedAmortizationTable_tsx.js"
     ]
   },
-  "components/MortgageCalculatorEnhanced.tsx -> ./PaymentChart": {
-    "id": "components/MortgageCalculatorEnhanced.tsx -> ./PaymentChart",
+  "components/MortgageCalculatorEnhanced.tsx -> ./EnhancedPaymentChart": {
+    "id": "components/MortgageCalculatorEnhanced.tsx -> ./EnhancedPaymentChart",
     "files": [
-      "static/chunks/_app-pages-browser_components_PaymentChart_tsx.js"
+      "static/chunks/_app-pages-browser_components_EnhancedPaymentChart_tsx.js"
     ]
   }
 }
