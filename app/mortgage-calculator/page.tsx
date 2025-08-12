@@ -343,7 +343,7 @@ export default function MortgageCalculatorPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">What's included in the monthly payment estimate?</CardTitle>
+                <CardTitle className="text-lg">What&apos;s included in the monthly payment estimate?</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600">

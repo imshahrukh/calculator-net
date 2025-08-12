@@ -134,7 +134,7 @@ export default function TestSharePage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <h4 className="font-semibold">1. Copy the Share Link</h4>
-              <p className="text-slate-600">Click the "Copy" button above to copy the sample share link to your clipboard.</p>
+              <p className="text-slate-600">Click the &quot;Copy&quot; button above to copy the sample share link to your clipboard.</p>
             </div>
             
             <div className="space-y-2">

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useParams } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -39,11 +39,7 @@ export default function SharedCalculationPage() {
   const [copied, setCopied] = useState(false)
   const [tokenInfo, setTokenInfo] = useState<{ isValid: boolean; expiresAt?: Date; createdAt?: Date } | null>(null)
 
-  useEffect(() => {
-    loadSharedCalculation()
-  }, [token])
-
-  const loadSharedCalculation = async () => {
+  const loadSharedCalculation = useCallback(async () => {
     try {
       // Get token info first
       const info = clientShare.getTokenInfo(token)
@@ -68,7 +64,11 @@ export default function SharedCalculationPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [token])
+
+  useEffect(() => {
+    loadSharedCalculation()
+  }, [loadSharedCalculation])
 
   const copyToClipboard = async (text: string) => {
     try {

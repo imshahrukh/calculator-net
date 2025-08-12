@@ -116,27 +116,7 @@ const MortgageCalculatorEnhanced: React.FC<MortgageCalculatorEnhancedProps> = ({
   // Calculate mortgage details with optimized memoization
   const mortgageOutput: MortgageOutput = useMemo(() => {
     return calculateMortgage(inputs)
-  }, [
-    inputs.homePrice,
-    inputs.downPaymentAmount,
-    inputs.loanTerm,
-    inputs.interestRate,
-    inputs.startMonth,
-    inputs.startYear,
-    inputs.propertyTaxesAmount,
-    inputs.homeInsurance,
-    inputs.pmi,
-    inputs.hoaFee,
-    inputs.otherCosts,
-    inputs.extraMonthlyPayment,
-    inputs.extraMonthlyStartMonth,
-    inputs.extraMonthlyStartYear,
-    inputs.oneTimeExtraPayment,
-    inputs.oneTimeExtraMonth,
-    inputs.oneTimeExtraYear,
-    inputs.annualExtraPayment,
-    inputs.annualExtraStartYear
-  ])
+  }, [inputs])
 
   // Announce calculation updates to screen readers
   useEffect(() => {
