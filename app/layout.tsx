@@ -56,6 +56,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'ahrefs-site-verification': 'c63996cc7c089a3f5bb7b1dc5e5a9552d0b8f19864912acc49c3b221de5f4d46',
+  },
 }
 
 // Structured data for SEO
