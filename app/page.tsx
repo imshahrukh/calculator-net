@@ -234,6 +234,27 @@ export default function HomePage() {
               </ul>
             </div>
             <div>
+              <h4 className="font-semibold mb-6 text-lg">Community</h4>
+              <ul className="space-y-3 text-slate-300">
+                <li><Link href="/mortgage-calculator/shared/sample_share_123" className="hover:text-white transition-colors flex items-center group">
+                  <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  Sample Calculations
+                </Link></li>
+                <li><Link href="/mortgage-calculator" className="hover:text-white transition-colors flex items-center group">
+                  <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  Create & Share
+                </Link></li>
+                <li><span className="text-slate-500 flex items-center group">
+                  <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  Community Forum
+                </span></li>
+                <li><span className="text-slate-500 flex items-center group">
+                  <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  User Stories
+                </span></li>
+              </ul>
+            </div>
+            <div>
               <h4 className="font-semibold mb-6 text-lg">Company</h4>
               <ul className="space-y-3 text-slate-300">
                 <li><span className="text-slate-500 flex items-center group">

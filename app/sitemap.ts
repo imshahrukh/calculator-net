@@ -3,6 +3,12 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://fastcalculator.co'
   
+  // Canonical URL Strategy:
+  // - Homepage: https://fastcalculator.co (canonical)
+  // - Mortgage Calculator: https://fastcalculator.co/mortgage-calculator (canonical)
+  // - Shared Calculations: Each has its own canonical URL based on the share ID
+  // - Section pages (#features, #calculators, etc.) are not separate pages, just anchors
+  
   return [
     // Main Pages
     {
@@ -52,13 +58,34 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     
-    // API Endpoints (for search engines to discover)
+    // Shared Calculation Pages
     {
-      url: `${baseUrl}/api/og`,
+      url: `${baseUrl}/mortgage-calculator/shared/sample_share_123`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.3,
+      changeFrequency: 'weekly',
+      priority: 0.6,
     },
+    {
+      url: `${baseUrl}/mortgage-calculator/shared/first_time_buyer_456`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.6,
+    },
+    {
+      url: `${baseUrl}/mortgage-calculator/shared/refinance_789`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.6,
+    },
+    
+    // API Endpoints (for search engines to discover)
+    // Note: API endpoints are excluded from sitemap as they shouldn't be indexed
+    // {
+    //   url: `${baseUrl}/api/og`,
+    //   lastModified: new Date(),
+    //   changeFrequency: 'monthly',
+    //   priority: 0.3,
+    // },
     
     // Important Static Content
     {

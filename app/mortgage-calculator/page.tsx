@@ -10,7 +10,10 @@ import { Logo } from '@/components/Logo'
 
 export const metadata: Metadata = {
   title: 'Mortgage Calculator - Calculate Monthly Payments & Amortization',
-  description: 'Free mortgage calculator to estimate monthly payments, view amortization schedules, and analyze extra payments. Get detailed breakdowns with taxes, insurance, and PMI.',
+  description: 'Calculate your mortgage payments with our free calculator. Get monthly payment estimates, amortization schedules, and extra payment analysis. Includes taxes, insurance, and PMI.',
+  alternates: {
+    canonical: 'https://fastcalculator.co/mortgage-calculator',
+  },
   keywords: [
     'mortgage calculator',
     'home loan calculator',
@@ -24,7 +27,7 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     title: 'Mortgage Calculator - Calculate Monthly Payments & Amortization',
-    description: 'Free mortgage calculator with detailed payment breakdowns, amortization schedules, and extra payment analysis.',
+    description: 'Calculate your mortgage payments with our free calculator. Get monthly payment estimates, amortization schedules, and extra payment analysis.',
     url: 'https://fastcalculator.co/mortgage-calculator',
     type: 'website',
     images: [
@@ -39,7 +42,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Mortgage Calculator - Calculate Monthly Payments & Amortization',
-    description: 'Free mortgage calculator with detailed payment breakdowns, amortization schedules, and extra payment analysis.',
+    description: 'Calculate your mortgage payments with our free calculator. Get monthly payment estimates, amortization schedules, and extra payment analysis.',
     images: ['https://fastcalculator.co/api/og?title=Mortgage Calculator&description=Calculate Monthly Payments & Amortization'],
   },
 }
@@ -312,6 +315,115 @@ export default function MortgageCalculatorPage() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Recent Shared Calculations Section */}
+      <section className="py-16 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">
+              Recent Shared Calculations
+            </h2>
+            <p className="text-lg text-slate-600">
+              Explore calculations shared by our community
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle className="text-lg">Sample Calculation</CardTitle>
+                <CardDescription>$500,000 Home - 20% Down - 30yr @ 6.5%</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Monthly Payment:</span>
+                    <span className="font-semibold text-green-600">$3,044</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Total Interest:</span>
+                    <span className="font-semibold text-amber-600">$695,905</span>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <Link 
+                    href="/mortgage-calculator/shared/sample_share_123" 
+                    className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                  >
+                    View Calculation →
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle className="text-lg">First-Time Buyer</CardTitle>
+                <CardDescription>$300,000 Home - 10% Down - 30yr @ 7.0%</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Monthly Payment:</span>
+                    <span className="font-semibold text-green-600">$2,123</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">PMI:</span>
+                    <span className="font-semibold text-orange-600">$125/month</span>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <Link 
+                    href="/mortgage-calculator/shared/first_time_buyer_456" 
+                    className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                  >
+                    View Calculation →
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <CardTitle className="text-lg">Refinance Example</CardTitle>
+                <CardDescription>$400,000 Refinance - 15yr @ 5.5%</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Monthly Payment:</span>
+                    <span className="font-semibold text-green-600">$3,268</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Interest Savings:</span>
+                    <span className="font-semibold text-green-600">$150K+</span>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <Link 
+                    href="/mortgage-calculator/shared/refinance_789" 
+                    className="text-blue-600 hover:text-blue-700 font-medium text-sm"
+                  >
+                    View Calculation →
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+          
+          <div className="text-center mt-8">
+            <p className="text-slate-600 mb-4">
+              Share your own calculation to help others make informed decisions
+            </p>
+            <Link 
+              href="#calculator" 
+              className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Create Your Calculation
+            </Link>
           </div>
         </div>
       </section>

@@ -2,12 +2,19 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'sonner'
+import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'FastCalculator.co - Free Online Calculators',
+  title: {
+    default: 'FastCalculator.co - Free Online Calculators',
+    template: '%s | FastCalculator.co'
+  },
   description: 'Free online calculators for mortgage, loan, investment, and financial planning. Get accurate calculations with detailed breakdowns and professional tools.',
+  alternates: {
+    canonical: 'https://fastcalculator.co',
+  },
   keywords: [
     'calculator',
     'mortgage calculator',
@@ -25,7 +32,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://fastcalculator.co'),
   openGraph: {
     title: 'FastCalculator.co - Free Online Calculators',
-    description: 'Free online calculators for mortgage, loan, investment, and financial planning.',
+    description: 'Free online calculators for mortgage, loan, investment, and financial planning. Get accurate calculations instantly.',
     url: 'https://fastcalculator.co',
     siteName: 'FastCalculator.co',
     locale: 'en_US',
@@ -42,7 +49,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'FastCalculator.co - Free Online Calculators',
-    description: 'Free online calculators for mortgage, loan, investment, and financial planning.',
+    description: 'Free online calculators for mortgage, loan, investment, and financial planning. Get accurate calculations instantly.',
     images: ['https://fastcalculator.co/api/og?title=FastCalculator.co&description=Free Online Calculators'],
   },
   robots: {
@@ -141,6 +148,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
         <Toaster position="top-right" richColors />
+        <Analytics />
       </body>
     </html>
   )
