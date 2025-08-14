@@ -134,6 +134,11 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <script 
+          src="https://analytics.ahrefs.com/analytics.js" 
+          data-key="+ottKCvT0gv/5xH5OZwhVw" 
+          async
+        />
       </head>
       <body className={inter.className}>
         {children}
