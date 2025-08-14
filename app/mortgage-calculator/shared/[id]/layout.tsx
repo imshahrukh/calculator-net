@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   return {
     title: 'Shared Mortgage Calculation',
-    description: 'View this shared mortgage calculation with detailed payment breakdowns and amortization schedules.',
+    description: 'View this shared mortgage calculation with payment breakdowns and amortization schedules.',
     alternates: {
       canonical: `https://fastcalculator.co/mortgage-calculator/shared/${params.id}`,
     },

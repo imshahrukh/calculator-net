@@ -194,9 +194,29 @@ export default function SharedCalculationPage() {
       </header>
 
       <div className="max-w-7xl mx-auto p-6 space-y-8">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center space-x-2 text-sm text-slate-600 mb-4">
+          <Link href="/" className="hover:text-blue-600 transition-colors">
+            Home
+          </Link>
+          <span>/</span>
+          <Link href="/mortgage-calculator" className="hover:text-blue-600 transition-colors">
+            Mortgage Calculator
+          </Link>
+          <span>/</span>
+          <Link href="/mortgage-calculator/shared/sample_share_123" className="hover:text-blue-600 transition-colors">
+            Sample Calculations
+          </Link>
+          <span>/</span>
+          <span className="text-slate-900 font-medium">Shared Calculation</span>
+        </nav>
+        
         {/* Shared Calculation Header */}
         <Card className="border-2 border-blue-100 shadow-xl">
           <CardHeader className="bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 border-b border-blue-200">
+            <h1 className="text-2xl font-bold text-blue-900 mb-2">
+              {sharedCalculation.title || 'Shared Mortgage Calculation'}
+            </h1>
             <div className="flex items-start justify-between">
               <div className="space-y-2">
                 <CardTitle className="text-2xl font-bold text-blue-900 flex items-center gap-2">
@@ -296,6 +316,111 @@ export default function SharedCalculationPage() {
           </CardContent>
         </Card>
 
+        {/* Educational Content Section */}
+        <Card className="border-2 border-blue-100">
+          <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-200">
+            <CardTitle className="text-xl font-bold text-blue-900 flex items-center gap-2">
+              <Calculator className="h-5 w-5" />
+              Understanding Your Mortgage Calculation
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h3 className="font-semibold text-slate-900">Principal & Interest</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  The principal and interest portion of your payment goes directly toward paying off your loan balance. Early payments are mostly interest, while later payments are mostly principal. This calculation shows you exactly how your payments are distributed over the life of your loan.
+                </p>
+                
+                <h3 className="font-semibold text-slate-900">Escrow Account</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Your escrow account covers property taxes, homeowners insurance, and PMI if applicable. These costs are typically included in your monthly payment and held by your lender to ensure they&apos;re paid on time.
+                </p>
+              </div>
+              
+              <div className="space-y-4">
+                <h3 className="font-semibold text-slate-900">Amortization Schedule</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  The amortization schedule shows how each payment is split between principal and interest. Over time, more of your payment goes toward principal, building equity in your home faster.
+                </p>
+                
+                <h3 className="font-semibold text-slate-900">Extra Payments Impact</h3>
+                <p className="text-slate-600 text-sm leading-relaxed">
+                  Making extra payments can significantly reduce your total interest and shorten your loan term. Even small additional payments can save thousands in interest over the life of your loan.
+                </p>
+              </div>
+            </div>
+            
+            <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <h4 className="font-semibold text-blue-900 mb-2">💡 Pro Tip</h4>
+              <p className="text-blue-800 text-sm">
+                Use this shared calculation as a starting point, then modify the inputs to see how different scenarios affect your payments. Consider factors like down payment amount, loan term, and interest rates to find the best option for your financial situation.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Related Calculations Section */}
+        <Card className="border-2 border-green-100">
+          <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 border-b border-green-200">
+            <CardTitle className="text-xl font-bold text-green-900 flex items-center gap-2">
+              <Calculator className="h-5 w-5" />
+              Explore More Calculations
+            </CardTitle>
+            <CardDescription className="text-green-700">
+              Discover other mortgage scenarios and financial tools
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Link href="/mortgage-calculator/shared/sample_share_123" className="block p-4 rounded-lg border border-green-200 hover:border-green-300 hover:bg-green-50 transition-all group">
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                    <Home className="h-5 w-5 text-green-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 group-hover:text-green-600 transition-colors">Sample Calculation</h3>
+                    <p className="text-sm text-slate-600">$500K Home - 20% Down</p>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link href="/mortgage-calculator/shared/first_time_buyer_456" className="block p-4 rounded-lg border border-green-200 hover:border-green-300 hover:bg-green-50 transition-all group">
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center group-hover:bg-blue-200 transition-colors">
+                    <Home className="h-5 w-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">First-Time Buyer</h3>
+                    <p className="text-sm text-slate-600">$300K Home - 10% Down</p>
+                  </div>
+                </div>
+              </Link>
+              
+              <Link href="/mortgage-calculator/shared/refinance_789" className="block p-4 rounded-lg border border-green-200 hover:border-green-300 hover:bg-green-50 transition-all group">
+                <div className="flex items-center space-x-3">
+                  <div className="h-10 w-10 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                    <Calculator className="h-5 w-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 group-hover:text-purple-600 transition-colors">Refinance Example</h3>
+                    <p className="text-sm text-slate-600">$400K Refinance - 15yr</p>
+                  </div>
+                </div>
+              </Link>
+            </div>
+            
+            <div className="mt-6 text-center">
+              <Link href="/mortgage-calculator">
+                <Button className="bg-green-600 hover:bg-green-700">
+                  <Calculator className="h-4 w-4 mr-2" />
+                  Create Your Own Calculation
+                </Button>
+              </Link>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Mortgage Calculator with Shared Data */}
         <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
           <div className="bg-gradient-to-r from-slate-50 to-blue-50 border-b border-slate-200 p-6">
@@ -304,7 +429,7 @@ export default function SharedCalculationPage() {
               Interactive Mortgage Calculator
             </h2>
             <p className="text-slate-600 mt-1">
-              View the detailed breakdown and modify the calculation to see how changes affect your payments
+              View the detailed breakdown and modify the calculation to see how changes affect your payments. This interactive calculator allows you to adjust loan terms, interest rates, and down payments to find the perfect mortgage scenario for your needs.
             </p>
           </div>
           
@@ -315,6 +440,53 @@ export default function SharedCalculationPage() {
             />
           </div>
         </div>
+        
+        {/* Footer with Additional Navigation Links */}
+        <footer className="bg-slate-900 text-white py-12 mt-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div className="col-span-1 md:col-span-2">
+                <div className="flex items-center space-x-3 mb-4">
+                  <Calculator className="h-6 w-6 text-blue-400" />
+                  <span className="text-lg font-bold">FastCalculator.co</span>
+                </div>
+                <p className="text-slate-400 text-sm mb-4">
+                  Free, accurate mortgage calculator with comprehensive payment analysis and amortization schedules.
+                </p>
+                <div className="flex space-x-4">
+                  <Link href="/mortgage-calculator" className="text-blue-400 hover:text-blue-300 text-sm">
+                    Create New Calculation
+                  </Link>
+                  <Link href="/" className="text-blue-400 hover:text-blue-300 text-sm">
+                    Browse All Tools
+                  </Link>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold mb-3">Tools</h4>
+                <ul className="space-y-2 text-slate-400 text-sm">
+                  <li><Link href="/mortgage-calculator" className="hover:text-white transition-colors">Mortgage Calculator</Link></li>
+                  <li><Link href="/" className="hover:text-white transition-colors">All Calculators</Link></li>
+                  <li><Link href="/mortgage-calculator#guide" className="hover:text-white transition-colors">Mortgage Guide</Link></li>
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold mb-3">Learn More</h4>
+                <ul className="space-y-2 text-slate-400 text-sm">
+                  <li><Link href="/mortgage-calculator#faq" className="hover:text-white transition-colors">FAQ</Link></li>
+                  <li><Link href="/mortgage-calculator#calculator" className="hover:text-white transition-colors">How to Use</Link></li>
+                  <li><Link href="/" className="hover:text-white transition-colors">About Our Tools</Link></li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400 text-sm">
+              <p>&copy; 2024 FastCalculator.co. All rights reserved.</p>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   )

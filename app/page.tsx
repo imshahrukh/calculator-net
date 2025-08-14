@@ -240,18 +240,18 @@ export default function HomePage() {
                   <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   Sample Calculations
                 </Link></li>
+                <li><Link href="/mortgage-calculator/shared/first_time_buyer_456" className="hover:text-white transition-colors flex items-center group">
+                  <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  First-Time Buyer Guide
+                </Link></li>
+                <li><Link href="/mortgage-calculator/shared/refinance_789" className="hover:text-white transition-colors flex items-center group">
+                  <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  Refinance Examples
+                </Link></li>
                 <li><Link href="/mortgage-calculator" className="hover:text-white transition-colors flex items-center group">
                   <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   Create & Share
                 </Link></li>
-                <li><span className="text-slate-500 flex items-center group">
-                  <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  Community Forum
-                </span></li>
-                <li><span className="text-slate-500 flex items-center group">
-                  <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  User Stories
-                </span></li>
               </ul>
             </div>
             <div>
