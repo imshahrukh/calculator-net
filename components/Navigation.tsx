@@ -10,8 +10,8 @@ const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
   const logoConfig = {
-    companyName: 'Calculator.net',
-    domain: 'calculator.net',
+    companyName: 'FastCalculator.co',
+    domain: 'fastcalculator.co',
     showDomain: false,
     fontStyle: 'bold' as const,
     textTransform: 'none' as const,

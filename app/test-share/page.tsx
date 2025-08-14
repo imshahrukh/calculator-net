@@ -10,7 +10,7 @@ import { toast } from 'sonner'
 export default function TestSharePage() {
   const [copied, setCopied] = useState(false)
   
-  const sampleShareUrl = `${typeof window !== 'undefined' ? window.location.origin : 'https://calculator.net'}/mortgage-calculator/shared/sample_share_123`
+  const sampleShareUrl = `${typeof window !== 'undefined' ? window.location.origin : 'https://fastcalculator.co'}/mortgage-calculator/shared/sample_share_123`
 
   const copyToClipboard = async (text: string) => {
     try {

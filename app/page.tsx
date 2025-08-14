@@ -20,6 +20,26 @@ export default function HomePage() {
       {/* Search and Filter Section */}
       <SearchAndFilter />
 
+      {/* Quick Navigation */}
+      <section className="py-8 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-sm">
+            <span className="text-slate-500">Quick Access:</span>
+            <Link href="/mortgage-calculator" className="text-blue-600 hover:text-blue-700 font-medium underline">
+              Mortgage Calculator
+            </Link>
+            <span className="text-slate-300">•</span>
+            <a href="#calculators" className="text-slate-600 hover:text-slate-800 font-medium">
+              All Calculators
+            </a>
+            <span className="text-slate-300">•</span>
+            <a href="#features" className="text-slate-600 hover:text-slate-800 font-medium">
+              Features
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="py-16 bg-white relative overflow-hidden">
         {/* Background decoration */}
@@ -37,7 +57,10 @@ export default function HomePage() {
               Everything You Need to Make <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Smart Decisions</span>
             </h2>
             <p className="text-lg sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-              Our advanced calculators provide comprehensive insights to help you understand every aspect of your finances with precision and clarity
+              Our advanced calculators provide comprehensive insights to help you understand every aspect of your finances with precision and clarity. 
+              Start with our <Link href="/mortgage-calculator" className="text-blue-600 hover:text-blue-700 font-semibold underline">
+                mortgage calculator
+              </Link> for accurate payment estimates and detailed analysis.
             </p>
           </div>
           
@@ -51,7 +74,11 @@ export default function HomePage() {
                 </div>
                 <CardTitle className="text-xl font-semibold text-slate-900">Advanced Calculations</CardTitle>
                 <CardDescription className="text-slate-600 text-base leading-relaxed">
-                  Precise financial calculations with support for complex scenarios and detailed analysis
+                  Precise financial calculations with support for complex scenarios and detailed analysis. Try our 
+                  <Link href="/mortgage-calculator" className="text-blue-600 hover:text-blue-700 font-semibold mx-1 underline">
+                    mortgage calculator
+                  </Link>
+                  for comprehensive payment analysis.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -77,7 +104,11 @@ export default function HomePage() {
                 </div>
                 <CardTitle className="text-xl font-semibold text-slate-900">Detailed Reports</CardTitle>
                 <CardDescription className="text-slate-600 text-base leading-relaxed">
-                  Comprehensive schedules and reports showing every detail of your financial plan
+                  Comprehensive schedules and reports showing every detail of your financial plan. Our 
+                  <Link href="/mortgage-calculator" className="text-blue-600 hover:text-blue-700 font-semibold mx-1 underline">
+                    mortgage calculator
+                  </Link>
+                  provides complete amortization schedules.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -162,10 +193,13 @@ export default function HomePage() {
                 <div className="h-10 w-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
                   <Calculator className="h-6 w-6 text-white" />
                 </div>
-                <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Calculator.net</span>
+                <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">FastCalculator.co</span>
               </div>
               <p className="text-slate-300 mb-6 max-w-md text-lg leading-relaxed">
-                The most comprehensive and accurate financial calculators to help you make informed decisions about your future.
+                The most comprehensive and accurate financial calculators to help you make informed decisions about your future. 
+                Try our <Link href="/mortgage-calculator" className="text-blue-400 hover:text-blue-300 underline">
+                  mortgage calculator
+                </Link> for detailed payment analysis and amortization schedules.
               </p>
               <div className="flex space-x-6">
                 <div className="flex items-center space-x-2 text-sm text-slate-300">
@@ -202,27 +236,27 @@ export default function HomePage() {
             <div>
               <h4 className="font-semibold mb-6 text-lg">Company</h4>
               <ul className="space-y-3 text-slate-300">
-                <li><a href="#" className="hover:text-white transition-colors flex items-center group">
+                <li><span className="text-slate-500 flex items-center group">
                   <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   About Us
-                </a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center group">
+                </span></li>
+                <li><span className="text-slate-500 flex items-center group">
                   <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   Privacy Policy
-                </a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center group">
+                </span></li>
+                <li><span className="text-slate-500 flex items-center group">
                   <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   Terms of Service
-                </a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center group">
+                </span></li>
+                <li><span className="text-slate-500 flex items-center group">
                   <ArrowRight className="h-3 w-3 mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
                   Contact
-                </a></li>
+                </span></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-slate-800 mt-12 pt-8 text-center text-slate-400">
-            <p>&copy; 2024 Calculator.net. All rights reserved. Built with ❤️ for better financial decisions.</p>
+            <p>&copy; 2024 FastCalculator.co. All rights reserved. Built with ❤️ for better financial decisions.</p>
           </div>
         </div>
       </footer>

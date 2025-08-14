@@ -28,7 +28,7 @@ function getTextStyle(config: TextConfig) {
 export function DynamicLogo({ variant, size, className, textConfig }: DynamicLogoProps) {
   const gradientId = createGradientId(variant);
   const textStyle = getTextStyle(textConfig);
-  const displayText = textConfig.companyName || 'Calculator.net';
+  const displayText = textConfig.companyName || 'FastCalculator.co';
   const displayDomain = textConfig.showDomain ? textConfig.domain : '';
 
   // Icon variant

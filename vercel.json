@@ -35,12 +35,5 @@
         }
       ]
     }
-  ],
-  "redirects": [
-    {
-      "source": "/calculator",
-      "destination": "/mortgage-calculator",
-      "permanent": true
-    }
   ]
 }

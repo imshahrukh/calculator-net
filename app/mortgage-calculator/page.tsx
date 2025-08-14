@@ -10,7 +10,7 @@ import { Logo } from '@/components/Logo'
 
 export const metadata: Metadata = {
   title: 'Mortgage Calculator - Calculate Monthly Payments & Amortization',
-  description: 'Free mortgage calculator to estimate monthly payments, view amortization schedules, analyze extra payments, and compare loan scenarios. Get detailed payment breakdowns with taxes, insurance, and PMI.',
+  description: 'Free mortgage calculator to estimate monthly payments, view amortization schedules, and analyze extra payments. Get detailed breakdowns with taxes, insurance, and PMI.',
   keywords: [
     'mortgage calculator',
     'home loan calculator',
@@ -25,12 +25,22 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Mortgage Calculator - Calculate Monthly Payments & Amortization',
     description: 'Free mortgage calculator with detailed payment breakdowns, amortization schedules, and extra payment analysis.',
+    url: 'https://fastcalculator.co/mortgage-calculator',
     type: 'website',
+    images: [
+      {
+        url: 'https://fastcalculator.co/api/og?title=Mortgage Calculator&description=Calculate Monthly Payments & Amortization',
+        width: 1200,
+        height: 630,
+        alt: 'Mortgage Calculator - Calculate Monthly Payments & Amortization',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Mortgage Calculator - Calculate Monthly Payments & Amortization',
     description: 'Free mortgage calculator with detailed payment breakdowns, amortization schedules, and extra payment analysis.',
+    images: ['https://fastcalculator.co/api/og?title=Mortgage Calculator&description=Calculate Monthly Payments & Amortization'],
   },
 }
 
@@ -307,7 +317,7 @@ export default function MortgageCalculatorPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-16 bg-slate-50">
+      <section id="faq" className="py-16 bg-slate-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">
@@ -373,7 +383,7 @@ export default function MortgageCalculatorPage() {
             <div>
               <div className="flex items-center space-x-2 mb-4">
                 <Calculator className="h-6 w-6 text-blue-400" />
-                <span className="text-lg font-bold">Calculator.net</span>
+                <span className="text-lg font-bold">FastCalculator.co</span>
               </div>
               <p className="text-slate-400 text-sm">
                 Free, accurate mortgage calculator with comprehensive payment analysis and amortization schedules.
@@ -390,14 +400,14 @@ export default function MortgageCalculatorPage() {
             <div>
               <h4 className="font-semibold mb-3">Support</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><span className="text-slate-500">Help Center</span></li>
+                <li><span className="text-slate-500">Contact Us</span></li>
+                <li><span className="text-slate-500">Privacy Policy</span></li>
               </ul>
             </div>
           </div>
           <div className="border-t border-slate-800 mt-8 pt-8 text-center text-slate-400 text-sm">
-            <p>&copy; 2024 Calculator.net. All rights reserved.</p>
+            <p>&copy; 2024 FastCalculator.co. All rights reserved.</p>
           </div>
         </div>
       </footer>

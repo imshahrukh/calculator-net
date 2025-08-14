@@ -40,7 +40,7 @@ export const shareAPI = {
   // Save a shared calculation
   async saveCalculation(calculation: Omit<SharedCalculation, 'id' | 'shareUrl'>): Promise<SharedCalculation> {
     const id = generateShareId()
-    const shareUrl = `${typeof window !== 'undefined' ? window.location.origin : 'https://calculator.net'}/mortgage-calculator/shared/${id}`
+    const shareUrl = `${typeof window !== 'undefined' ? window.location.origin : 'https://fastcalculator.co'}/mortgage-calculator/shared/${id}`
     
     const sharedCalc: SharedCalculation = {
       ...calculation,

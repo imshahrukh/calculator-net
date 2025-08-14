@@ -16,8 +16,8 @@ export function Logo({
   textConfig = {} 
 }: LogoProps) {
   const defaultConfig: TextConfig = {
-    companyName: 'Calculator.net',
-    domain: 'calculator.net',
+      companyName: 'FastCalculator.co',
+  domain: 'fastcalculator.co',
     showDomain: false,
     fontStyle: 'bold',
     textTransform: 'none',

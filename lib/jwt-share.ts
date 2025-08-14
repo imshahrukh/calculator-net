@@ -71,7 +71,7 @@ export const jwtShare = {
   // Generate a shareable URL with JWT token
   generateShareUrl(calculationData: SharedCalculationData): string {
     const token = this.createShareToken(calculationData)
-    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://calculator.net'
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://fastcalculator.co'
     return `${baseUrl}/mortgage-calculator/shared/${token}`
   },
 
